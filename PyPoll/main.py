@@ -1,7 +1,7 @@
 import csv
 
 # We want to read the election data from the csv file
-with open('election_data.csv', 'r') as f:
+with open('./Resources/election_data.csv', 'r') as f:
     csv_reader = csv.reader(f, delimiter= ',')
     next(csv_reader) # To skip the header row
 
@@ -28,23 +28,33 @@ vote_percents = [round(percent, 2) for percent in vote_percents]
 
 # We want the total votes
 vote_totals = []
-for value in vote_tallies.values():
+for value in number_votes.values():
     vote_totals.append(value)
 
 # We want the election results
 election_result = []
 for _ in range(len(candidates)):
-    election_results.append(f"{candidates[_]}: {vote_percents[_]} ({number_votes[_]})")
+    election_result.append(f"{candidates[_]}: {vote_percents[_]} ({number_votes[_]})")
 
 # We want to find the candidate with the most votes
 most_votes = max(number_votes.values())
 top_candidate = [i for i, v in number_votes.items() if v == most_votes]
 
-# We want an analysis report
-print(f"Election Results")
-print("-------------------")
-print(f"Total Votes: {total_votes}")
-print("--------------------")
-print(f"Top Candidate: {top_candidate}")
-print("---------------------")
+output = f"Election Results\n"
+output += "-------------------\n"
+output += f"Total Votes: {total_votes}\n"
+output += "--------------------\n"
+output += f"Top Candidate: {top_candidate}\n"
+output += "---------------------\n"
 
+print(output)
+# We want an analysis report
+# print(f"Election Results")
+# print("-------------------")
+# print(f"Total Votes: {total_votes}")
+# print("--------------------")
+# print(f"Top Candidate: {top_candidate}")
+# print("---------------------")
+
+with open('./Resources/election_data.csv', 'w') as f:
+    f.write(output)
